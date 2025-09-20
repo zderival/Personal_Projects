@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Portfolio</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="mediaquaries.css">
+</head>
+<body>
+    <nav id = "desktop-nav">
+        <div class = "logo">Zachary Derival</div>
+        <div>
+        <ul class = "nav-links">
+            <li> <a href = "#about">About</a></li>
+            <li> <a href = "#experience">Experience</a></li>
+            <li> <a href = "#projects">Projects</a></li>
+            <li> <a href = "#contact">Contacts</a></li>
+        </ul>
+        </div>
+    </nav>
+
+    <nav id="hamburger-nav">
+        <div class = logo>John Doe</div>
+        <div class = "hamburger-menu">
+        <div class = "hamburger-icon" onclick = toggleMenu()>
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <div class = menu-links>
+            <li> <a href = "#about" onclick = toggleMenu()>About</a></li>
+            <li> <a href = "#experience" onclick = toggleMenu()>Experience</a></li>
+            <li> <a href = "#projects" onclick = toggleMenu()>Projects</a></li>
+            <li> <a href = "#contact"onclick = toggleMenu()>Contacts</a></li>
+        </div>
+    </nav>
+
+    <section id = "profile">
+        <div class= "section__pic-container">
+            <img src="./assets/profile_pic.png" alt="Profile Picture">
+        </div>
+        <div class = "section__text">
+            <p class = "section__text__p1">Hello, I'm</p>
+            <h1 class = "title">Zachary Derival</h1>
+            <p class = "section__text__p2">A aspiring software developer studying at Kennesaw State University</p>
+            <div class = "btn-container">
+                <button 
+                class="btn btn-color-1" 
+                onclick="window.open('/assets/Zachs Resume.pdf')">
+                View Resume
+            </button>
+            </div>
+            <div id = "social-container">
+                <img 
+                src= "./assets/linkedin.png" 
+                alt = "Linkedin"
+                class = "icon" 
+                onclick="location.href= 'https://www.linkedin.com/in/zacharyderival/'"
+                />
+            <img 
+                src= "./assets/github.png" 
+                alt = "GitHub"
+                class = "icon" 
+                onclick="location.href= 'https://github.com/zderival'"
+                />
+            </div>
+        </div>
+    </section>
+
+    <section id = "about">
+        <div class="about-header">
+            <h1 class = title>About me</h1>
+            <p class = section__text__p1>Me Beyond the Computer</p>
+        </div>
+        <div class="section__pic-container">
+            <div class="section__pic-container">
+                <img 
+                src="./assets/profile_pic.png" 
+                alt="About Me Picture"
+                class = "about-pic"
+                />
+            </div>
+            <div class="about-details-container">
+                <div class = "about-containers">
+                    <div class = details-container>
+                        <img 
+                        src= "./assets/education.png" 
+                        alt = "Education Icon" 
+                        class = "icon"
+                        />
+                        <h3>Experience</h3>
+                        <p>2 years <br>Software Development</p>
+                    </div>
+                    <div class = details-container>
+                    <div class = project-icon>
+                        <img 
+                        src= "./assets/project_folder.png" 
+                        alt = "Projects Icon" 
+                        class = "icon"
+                        />
+                    </div>
+                        <h3>Projects</h3>
+                        <p>2 completed <br>projects</p>
+                    </div>
+                </div>
+                <div class = "text-container">
+                    Currently a sophmore at Kennesaw State University pursuing a B.S. in Software Engineering. 
+                    I have a passion for software development and building my understanding with new technologies as my career continues. 
+                    In my free time, I like going to the gym, going out with friends, and playing games.
+                </div>
+            </div>
+        </div>
+        <img 
+        src="./assets/arrow.png "
+        alt=" Arrow Icon"
+        class = "icon arrow"
+        onclick="location.href= './#experience'"
+        />
+    </section>
+
+    <section id = "experience">
+        <h1 class= "title"> Experience</h1>
+        <div class="experience-details-container">
+            <div class = "about-containers">
+                <div class = "details-container">
+                    <h2 class="experience-sub-title">Frontend Development</h2>
+                    <div class = "article-container">
+                        <article>
+                            <img 
+                            src="./Assets/checkmark.png" 
+                            alt = "Experience Icon"
+                            class = "icon"
+                            />
+                            <div>
+                                <h3>HTML</h3>
+                                <p>Basic</p>
+                            </div>
+                        </article>
+                        <article>
+                            <img 
+                            src="./Assets/checkmark.png" 
+                            alt = "Experience Icon"
+                            class = "icon"
+                            />
+                            <div>
+                                <h3>CSS</h3>
+                                <p>Basic</p>
+                            </div>
+                        </article>
+                        <article>
+                            <img 
+                            src="./Assets/checkmark.png" 
+                            alt = "Experience Icon"
+                            class = "icon"
+                            />
+                            <div>
+                                <h3>Java</h3>
+                                <p>Basic</p>
+                                </div>
+                            </div>
+                        </article>
+                        <article>
+                            <img 
+                            src="./Assets/checkmark.png" 
+                            alt = "Experience Icon"
+                            class = "icon"
+                            />
+                            <div>
+                                <h3>Python</h3>
+                                <p>Basic</p>
+                            </div>
+                        </article>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <img
+        src="./assets/arrow.png "
+        alt=" Arrow Icon"
+        class = "icon arrow"
+        onclick="location.href= './#projects'"
+        />
+    </section>
+    <section id = "projects">
+        <p class = "section__text__p1"> Recent Projects</p>
+        <h1 clss="title"> Projects</h1>
+        <div class=" experience-details-container">
+            <div class ="about-containers">
+            <div class="details-container color-container">
+                <div class = "article-container">
+                    <img 
+                    src="./Assets/gray-folder.png" 
+                    alt = "Project 1" 
+                    class = "project-img"
+                    />
+                </div>
+                <h2 class = "experience-sub-title project-title"> WhatsNew?</h2>
+                <div class="btn-container">
+                    <button class="btn btn-color-2 project-btn" 
+                    onclick="location.href= 'https://github.com/zderival/Personal_Projects/tree/main/WhatsNew%20-%20Python'">
+                    GitHub
+                    </button>
+            </div>
+        </div>
+                  <div class="details-container color-container">
+                <div class = "article-container">
+                    <img 
+                    src="./Assets/gray-folder.png" 
+                    alt = "Project 2" 
+                    class = "project-img"
+                    />
+                </div>
+                <h2 class = "experience-sub-title project-title">MazeRunner</h2>
+                <div class="btn-container">
+                    <button class="btn btn-color-2 project-btn" 
+                    onclick="location.href= 'https://github.com/zderival/School-Projects-/blob/main/MazeRunnerFinalVersion%20(2).zip'">
+                    GitHub
+                    </button>
+            </div>
+        </div>
+                  <div class="details-container color-container">
+                <div class = "article-container">
+                    <img 
+                    src="./Assets/gray-folder.png" 
+                    alt = "Project 3" 
+                    class = "project-img"
+                    />
+                </div>
+                <h2 class = "experience-sub-title project-title">Portfolio Website</h2>
+                <div class="btn-container">
+                    <button class="btn btn-color-2 project-btn" 
+                    onclick="location.href= ''">
+                    GitHub
+                    </button>
+            </div>
+        </div>
+    </div>
+    </div>
+</section>
+<section id="contact">
+    <h1 class="title">Contact Me</h1>
+    <div class="contact-info-upper-container">
+        <div class= "contact-info-container">
+            <img src="./Assets/email.png" 
+            alt="Email icon" 
+            class="icon contact-icon"
+            />
+            <p><a href= "mailto:zderival@gmail.com">zderival@gmail.com</a>
+            </p>
+        </div>
+        <div class= "contact-info-container">
+            <img src="./Assets/linkedin.png" 
+            alt="Linkedin icon" 
+            class="icon contact-icon"
+            />
+            <p><a href= "https://www.linkedin.com/in/zacharyderival/">My Linkedin</a></p>
+        </div>
+    </div>
+</section>
+<footer>
+    <nav>
+        <div class="nav-links-container">
+            <ul class = "nav-links">
+            <li> <a href = "#about">About</a></li>
+            <li> <a href = "#experience">Experience</a></li>
+            <li> <a href = "#projects">Projects</a></li>
+            <li> <a href = "#contact">Contacts</a></li>
+        </ul>
+    </div>
+    </nav>
+    <p>Copyright &#169; 2025 Zachary Derival. All Rights Reserved.</p>
+</footer>
+<script src="script.js"></script>
+</body>
+</html>
