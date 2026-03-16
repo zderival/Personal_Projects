@@ -22,9 +22,6 @@ class User:
 class InvalidUserException(Exception):
     pass
 
-# Will soon be an actual database
-user_storage = {}
-temp_id_storage = {}
 #Password Security
 ph = PasswordHasher()
 def hash_password(password):
@@ -43,13 +40,11 @@ conn = psycopg2.connect(
     password = "Godisgood1"
 )
 cursor = conn.cursor(cursor_factory= RealDictCursor)
+register_uuid()
 
 def generate_id():
-     while True:
-         register_uuid()
-         id = uuid.uuid4()
-         if id not in user_storage:
-             return id
+         return uuid.uuid4()
+
 
 cooldown_active = False
 def cooldown(duration):
@@ -184,4 +179,3 @@ def login():
                 t = threading.Thread(target=cooldown, args=(300,))
                 t.start()
                 return None
-
