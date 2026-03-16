@@ -1,9 +1,13 @@
+#Every profile will have the NewsManager Class
+
 import random
 import os
 import shutil
+from NewsManagment import NewsManager
+
 
 class Profile:
-    def __init__(self, username, email, password, id, profile_pic, saved_article,display_color = None, newUser = True):
+    def __init__(self, username, email, password, id, profile_pic,display_color = None, newUser = True):
         self.username = username
         self.email = email
         self.password = password
@@ -12,13 +16,13 @@ class Profile:
         self.display_color = display_color
         self.profile_pic = profile_pic
         self.article_preferences = []
-        self.saved_article = []
-
+        self.saved_articles = []
+        self.new_manager = NewsManager()
     def change_email(self):
         class InvalidEmailException(Exception):
             pass
         new_email = input("Enter new email: ")
-        verify_code = str(random.randint(00000,99999))
+        verify_code = f"{random.randint(0,99999):05d}"
         # here is where the code is sent to the email
         attempts = 5
         while attempts != 0:
@@ -84,4 +88,5 @@ class Profile:
         print("Available topics: tech fashion sports music politics health science ")
         select_topics = input("What topics would you like to see? ").lower()
         self.article_preferences = select_topics.split(" ")
+        # Change the user's article preferences
         # Change the user's article preferences
