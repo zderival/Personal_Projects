@@ -62,6 +62,28 @@ def print_article(url, params = None):
     print(f"{len(articles)} articles found")
     return articles, ids
 
+def articles_isEmpty(user_list,user):
+    if len(user_list) == 0:
+        return True
+
+def prompt_articles_save(articles, user):
+    ask_to_save_articles = input("Are there articles you wish to save? (yes/no): ").strip().lower()
+    save_article_choice = []
+
+    if ask_to_save_articles == "yes":
+        try:
+            choices_input = input("Enter the numbers of the articles you wish to save (separated by spaces): ").strip()
+            save_article_choice = [int(x) for x in choices_input.split()]
+
+            if save_article_choice:
+                user.profile.new_manager.save_articles(save_article_choice, user)
+            else:
+                print("No valid article numbers entered.")
+
+        except ValueError:
+            print("Invalid input. Please enter numbers only.")
+    else:
+        print("No articles saved.")
 
 class NewsManager:
     def __init__(self):
@@ -71,12 +93,12 @@ class NewsManager:
     def filter_topics(user_list):
         user_topics = user_list
         preferred_articles = [] #Save for ML/AI recommendations later
-        for topic in user_topics:
-            url2 = f"https://newsapi.org/v2/top-headlines?category={topic}&apiKey={api_key}"
-            print("Topic: " + topic)
-            print()
-            articles = print_article(url2)
-            preferred_articles.extend(articles)
+        formatted = [topic.title() for topic in user_topics]
+        output = ",".join(formatted)
+        if len(user_topics) == 1:
+            print(f"{output} is your preference")
+        else:
+            print(f"{output} are your preferences")
         return preferred_articles
 
     @staticmethod
@@ -125,8 +147,6 @@ class NewsManager:
 
     @staticmethod
     def remove_articles(choice_list, user):
-        if choice_list == "No":
-            return
             # convert input to integers
         nums = [int(x) for x in choice_list]
 
@@ -147,3 +167,6 @@ class NewsManager:
                   "apikey": api_key,
                   }
         return print_article(url,params)
+
+
+
