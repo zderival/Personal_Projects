@@ -1,60 +1,153 @@
 import Login
 import NewsManagment
-from Login import User
+from Login import User, cursor, conn
 import Profile
 import Homepage
 import SavedArticlesPage
-from NewsManagment import NewsManager, api_url2
+from NewsManagment import NewsManager, api_url2, articles_isEmpty
 
 if __name__ == "__main__":
     while True:
-        choice = 0
-        try:
-            choice = int(input("Type 1 to Login, 2 to Create an Account: "))
-        except ValueError:
-            print("Invalid input please try again")
-            continue
-        if choice == 1:
-            user: User = Login.login()
-            if user is None:
+        while True:
+            choice = 0
+            print("====================================")
+            print("       Welcome to WhatsNew       ")
+            print("====================================")
+            print("1. Login")
+            print("2. Create Account")
+            print("3. Exit")
+
+            try:
+                choice = int(input("Select Option: "))
+            except ValueError:
+                print("Invalid input please try again")
                 continue
-        elif choice == 2:
-            Login.create_account()
-            continue
-        else:
-            print("Please type 1 or 2.")
-            continue
-        break
+            if choice == 1:
+                user: User = Login.login()
+                if user is None:
+                    continue
+            elif choice == 2:
+                Login.create_account()
+                continue
+            elif choice == 3:
+                exit()
+            else:
+                print("Please type 1, 2 or 3.")
+                continue
+            break
+        print()
+        print("Welcome!")
+        #Main loop
+        while True:
+            print("=============================")
+            print("        Dashboard       ")
+            print("=============================")
+            print("1) View Latest News")
+            print()
+            print("2) Search News")
+            print()
+            print("3) Saved News")
+            print()
+            print("4) Recommendations")
+            print()
+            print("5) Preferences")
+            print()
+            print("6) Profile Settings")
+            print()
+            print("7) Logout")
+            print()
+            print("8) Exit")
+            option = int(input("Select Option: "))
 
-    print("Here is the latest news: ")
-    articles = NewsManagment.print_article(api_url2)
+            match option:
+                case 1:
+                    print("Latest news: ")
+                    articles = NewsManagment.print_article(api_url2)
+                    NewsManagment.prompt_articles_save(articles, user)
+                    continue
+                case 2:
+                    search = input("What would you like to find? ")
+                    articles = user.profile.new_manager.search_articles(search)
+                    NewsManagment.prompt_articles_save(articles, user)
+                case 3:
+                    while True:
+                        if NewsManagment.articles_isEmpty(user.profile.saved_articles,user):
+                            print("Your list is empty")
+                            break
+                        for i, article in enumerate(user.profile.saved_articles, start=1):
+                            print(f"{i}. {article}")
+                        save_article_choice = input("Enter spaced article numbers to remove OR type 'no' to go back: ").strip().lower()
+                        if save_article_choice == "no":
+                            break
+                        user.profile.new_manager.remove_articles(save_article_choice,user)
+                        for i, article in enumerate(user.profile.saved_articles, start=1):
+                            print(f"{i}. {article}")
+                        continue
+                case 4:
+                    if articles_isEmpty(user.profile.article_preferences,user):
+                        print("Your preference list is empty. Please enter your preferences in option 5,", end= " ")
+                        print("So we can fetch proper recommendations for you.")
+                        break
 
-    #Spesfiy what articles user want to see:
-    # while True:
-    #     print("Menu")
-    #     print("What would you like to do")
-    #     print("1) Find specific articles")
-    #     print("2) Save articles")
-    #     print("3) Search articles")
-    #     print("")
-    #     break
+                case 5:
+                    preferences = input("What types of articles do you wish to see (comma separated): ").lower().strip().split(",")
+                    user.profile.article_preferences = preferences
+                    user.profile.new_manager.filter_topics(user.profile.article_preferences)
+                    continue
+                case 6:
+                    while True:
+                        print("1) Change Email")
+                        print()
+                        print("2) Change Password")
+                        print()
+                        print("3) Change Username")
+                        print()
+                        print("4) Delete Account")
+                        print()
+                        print("5) Back")
+                        options = int(input("Select option: "))
+                        match options:
+                            case 1:
+                                user.profile.change_email(cursor,conn)
+                                continue
+                            case 2:
+                                user.profile.change_password(cursor,conn)
+                                continue
+                            case 3:
+                                user.profile.change_username()
+                                continue
+                            case 4:
+                                while True:
+                                    confirm = input("Are you sure? All data will be deleted. (Type yes or no): ").lower()
+                                    if confirm == "yes":
+                                        user.profile.delete_profile()
+                                    elif confirm == "no":
+                                        continue
+                                    else:
+                                        print("Please type yes or no")
+                            case 5:
+                                break
+                case 7:
+                    break
+                case 8:
+                    exit()
+                case _:
+                    print("Please type the available options.")
 
-    #filter by topics function
-    # preferences = input("What types of articles do you wish to see: ").lower().strip().split()
-    # user.profile.article_preferences = preferences
-    # user.profile.new_manager.filter_topics(user.profile.article_preferences)
 
-    # Save/remove articles:
-    # save_article_choice = [int(x) for x in input("Any articles you wish to save?: ").strip().split()]
-    # user.profile.new_manager.save_articles(save_article_choice,user)
-    # for i, article in enumerate(user.profile.saved_articles, start=1):
-    #     print(f"{i}. {article}")
-    #
-    # save_article_choice = input("Any articles you wish to remove?: ").strip().split()
-    # user.profile.new_manager.remove_articles(save_article_choice,user)
-    # for i, article in enumerate(user.profile.saved_articles, start=1):
-    #     print(f"{i}. {article}")
+        # filter by topics function
+        # preferences = input("What types of articles do you wish to see: ").lower().strip().split()
+        # user.profile.article_preferences = preferences
+        # user.profile.new_manager.filter_topics(user.profile.article_preferences)
 
-    # Search for articles
-    # search = input("What would you like to find? ")
-    # user.profile.new_manager.search_articles(search)
+        # Save/remove articles:
+        # for i, article in enumerate(user.profile.saved_articles, start=1):
+        #      print(f"{i}. {article}")
+        # save_article_choice = input("Any articles you wish to remove?: ").strip().split()
+        # user.profile.new_manager.remove_articles(save_article_choice,user)
+        # for i, article in enumerate(user.profile.saved_articles, start=1):
+        #     print(f"{i}. {article}")
+        #
+        # Search for articles
+        # search = input("What would you like to find? ")
+        # user.profile.new_manager.search_articles(search)
