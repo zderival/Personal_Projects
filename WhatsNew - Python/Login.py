@@ -4,7 +4,6 @@ import uuid
 from argon2 import PasswordHasher
 from argon2.exceptions import VerifyMismatchError, VerificationError, InvalidHashError
 from psycopg2.extras import RealDictCursor, register_uuid
-
 from Profile import Profile
 import threading
 import psycopg2
@@ -18,7 +17,7 @@ class User:
         self.password = password
         self.email = email
         self.newUser = new_user
-        self.profile = Profile(username,email,password,id,profile_pic=None,display_color=None,newUser = True)
+        self.profile = Profile(id)
 class InvalidUserException(Exception):
     pass
 
@@ -33,17 +32,19 @@ def verify_password(stored_hash, entered_password):
         return False
 
 email_domains = ["gmail.com","outlook.com","hotmail.com","yahoo.com"]
+
 conn = psycopg2.connect(
     host = "localhost",
     database = "whats_new",
     user = "zach",
     password = "Godisgood1"
 )
+
 cursor = conn.cursor(cursor_factory= RealDictCursor)
 register_uuid()
 
 def generate_id():
-         return uuid.uuid4()
+    return uuid.uuid4()
 
 
 cooldown_active = False
@@ -60,6 +61,8 @@ def create_account():
         pass
     username = ""
     while True:
+        print()
+        print("(Create an Account)")
         try:
             username = input("Enter a Username: ")
             if len(username) < 8 or len(username) > 32:
@@ -76,10 +79,9 @@ def create_account():
     while True:
         try:
             email = input("Enter your email: ").strip()
-            if not any(email.endswith("@" + domain) for domain in email_domains):
+            if "@" not in email or "." not in email:
                 raise InvalidUserSetup("Invalid email format")
-            sql = """SELECT EXISTS(SELECT 1 FROM "user" WHERE email = %s);
-                        """
+            sql = """SELECT EXISTS(SELECT 1 FROM "user" WHERE email = %s); """
             cursor.execute(sql, (email,))
             exists = cursor.fetchone()['exists']
             if exists:
@@ -89,7 +91,7 @@ def create_account():
             print(e)
     while True:
         try:
-            dob_input = input("Date of birth (ie: MM/DD/YYYY): ")
+            dob_input = input("Date of birth (ie: MM/DD/YYYY): ").strip()
             parts = dob_input.split("/")
 
             if len(parts) != 3:
@@ -144,9 +146,10 @@ def create_account():
     cursor.execute(sql,(id, username, email, password_hash,dob_date))
     conn.commit()
     print("Account created.")
-    print("Welcome!")
 
 def login():
+    print()
+    print("(Login)")
     user = None
     if cooldown_active:
         print("Login temporarily blocked. Try again later.")
@@ -162,7 +165,6 @@ def login():
     while attempts > 0:
         password = input("Enter your password: ")
         if verify_password(user['password'], password):
-            print("Welcome!")
             return User(
         id=user['id'],
         dob=user['dob'],
